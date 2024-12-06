@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayuda - Educación</title>
+    <link rel="stylesheet" href="./Reportecss.css">
+</head>
+<body>
+<!-- Botón de menú -->
+<button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+<div class="container">
+    <!-- Barra lateral -->
+    <div class="sidebar" id="sidebar">
+        <h2 style="text-align: center;">Dashboard</h2>
+        <a href="./Dashboard.html">Inicio</a>
+        <a href="#">Estadísticas</a>
+        <a href="./Reporte.html">Reportes</a>
+        <a href="#">Usuarios</a>
+        <a href="#">Configuración</a>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="main">
+        <div class="header">
+            <h1>Ayuda</h1>
+        </div>
+        <div class="content">
+            <h2>Preguntas Frecuentes</h2>
+            <div class="faq" onclick="toggleFAQ(this)">
+                <h3>¿Cómo consulto las calificaciones?</h3>
+                <p>Para consultar tus calificaciones, dirígete al apartado "Calificaciones" en el menú lateral.</p>
+            </div>
+            <div class="faq" onclick="toggleFAQ(this)">
+                <h3>¿Cómo actualizo mis datos?</h3>
+                <p>Puedes actualizar tu información personal desde el apartado "Configuración" de tu cuenta.</p>
+            </div>
+            <div class="faq" onclick="toggleFAQ(this)">
+                <h3>¿Cómo agrego un estudiante?</h3>
+                <p>Los administradores pueden añadir estudiantes desde la sección "Estudiantes" en el menú lateral.</p>
+            </div>
+
+            <div class="links">
+                <h2>Enlaces Útiles</h2>
+                <a href="#">Manual de Usuario</a>
+                <a href="#">Políticas del Sistema</a>
+                <a href="#">Soporte Técnico</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para alternar la barra lateral
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // Función para abrir/cerrar preguntas frecuentes
+        function toggleFAQ(faqElement) {
+            faqElement.classList.toggle('open');
+        }
+    </script>
+
+</body>
+</html>
