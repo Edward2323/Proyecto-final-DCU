@@ -20,27 +20,6 @@ body {
     flex-direction: column;
 }
 
-.sidebar a, h5 {
-    color: white;
-    text-decoration: none;
-    text-align: center;
-    margin: 0;
-    display: block;
-}
-
-.sidebar a{
-    color: white;
-    text-decoration: none;
-    padding-bottom: 5px;
-    text-align: center;
-    margin: 0;
-    display: block;
-}
-
-.sidebar h5{
-    padding-bottom: 15px;
-}
-
 .sidebar img {
     width: 30px;
     height: 30px;

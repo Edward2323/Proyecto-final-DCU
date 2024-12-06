@@ -5,26 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aula Virtual</title>
     <link rel="stylesheet" href="../Styles/desingcali.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
 </head>
 <body>
 
-<div class="sidebar">
+      <!-- Botón de menú -->
+      <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+<div class="sidebar" id="sidebar">
     <h2 style="text-align: center;">Menu</h2>
 
-    <a href="../index.html">
+    <a href="../html/Dashboard.html">
         <img src="../public/hogar (3).png" alt="">
     </a>
     <h5>hogar</h5>
 
-    <a href="calificaciones.html">
+    <a href="../html/calificaciones.html">
         <img src="../public/votacion.png" alt="">
     </a>
     <h5>Calificaciones</h5>
 
-    <a href="./calificaciones.html">
-        <img src="../public/exclamacion.png" alt="">
+    <a href="../html/Reporte.html">
+        <img src="../public/informacion.png" alt="">
     </a>
-    <h5>Reportes</h5>
+    <h5>Ayuda</h5>
 
     <a href="">
         <img src="../public/usuario-graduado.png" alt="">
@@ -38,16 +46,30 @@
 
 </div>
 
-
-<div class="main-content">
+<div class="main-content" id="mainContent">
     <div class="header">
         <h1>Calificaciones</h1>
+    </div>
+
+    <hr>
+
+    <div class="Opotions-table">
+
+      <select id="select-C" name="select-C">
+          <option value="opcion1">C-3</option>
+          <option value="opcion2">C-2</option>
+          <option value="opcion3">C-1</option>
+      </select>
+
+      <button class="pdf-button" onclick="exportTableToPDF()">
+        <i class="fas fa-file-pdf fa-2x"></i>
+      </button>
+
     </div>
 
     <div class="Calificaciones">
         <table>
             <table>
-                <caption>Calificaciones</caption> <!-- (Opcional) Para añadir un título a la tabla -->
                 <thead> <!-- (Opcional) Define la cabecera de la tabla -->
                   <tr> <!-- Fila de la cabecera -->
                     <th>Materia</th>
@@ -60,7 +82,7 @@
                 </thead>
                 <tbody> <!-- Define el cuerpo de la tabla -->
                   <tr> <!-- Primera fila de datos -->
-                    <td>Calculo Integral</td>
+                    <td>Inteligencia Artificial</td>
                     <td>35</td>
                     <td>15</td>
                     <td>10</td>
@@ -68,24 +90,74 @@
                     <td>90</td>
                   </tr>
                   <tr> <!-- Segunda fila de datos -->
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>Ingles 5-7</td>
+                    <td>35</td>
+                    <td>15</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>90</td>
                   </tr>
+                  <tr> <!-- Segunda fila de datos -->
+                    <td>Programacion II</td>
+                    <td>35</td>
+                    <td>15</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>90</td>
+                  </tr>
+                  <tr> <!-- Segunda fila de datos -->
+                    <td>Base de Datos</td>
+                    <td>35</td>
+                    <td>15</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>90</td>
+                  </tr>
+                  <tr> <!-- Segunda fila de datos -->
+                    <td>Calculo Integral</td>
+                    <td>35</td>
+                    <td>15</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>90</td>
+                  </tr>
+
                 </tbody>
-                <tfoot> <!-- (Opcional) Define el pie de tabla -->
-                  <tr>
-                    <td colspan="3"></td>
-                  </tr>
-                </tfoot>
               </table>
         </table>
-    </div>
-
-
-
-    
+    </div>   
 </div>
+
+
+      <!-- ERROR: CORREGIR EXPORTACION DE PDF -->
+<script>
+  // Función para mostrar/ocultar la barra lateral y ajustar el contenido principal
+  function toggleSidebar() {
+      var sidebar = document.getElementById('sidebar');
+      var mainContent = document.getElementById('mainContent');
+      sidebar.classList.toggle('open');
+      mainContent.classList.toggle('shifted');
+  }
+
+    // Función para exportar la tabla a PDF
+    async function exportTableToPDF() {
+      const { jsPDF } = window.jspdf; // Importar jsPDF
+      const doc = new jsPDF(); // Crear instancia de jsPDF
+
+      // Obtener la tabla de calificaciones
+      const table = document.getElementById("calificacionesTable");
+
+      // Agregar el contenido de la tabla al PDF
+      doc.text("Calificaciones", 14, 10); // Título
+      doc.autoTable({ html: table }); // Convertir tabla HTML en tabla PDF
+
+      // Guardar el PDF
+      doc.save("calificaciones.pdf");
+  }
+  </script>
+
+
+
     
 </body>
 </html>
