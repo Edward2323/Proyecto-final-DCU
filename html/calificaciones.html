@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula Virtual</title>
+    <title>PicaUni</title>
     <link rel="stylesheet" href="../Styles/desingcali.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -20,29 +20,24 @@
     <h2 style="text-align: center;">Menu</h2>
 
     <a href="../html/Dashboard.html">
-        <img src="../public/hogar (3).png" alt="">
-    </a>
-    <h5>hogar</h5>
+      <img src="../public/hogar (3).png" alt="">
+  </a>
+  <h5>hogar</h5>
 
-    <a href="../html/calificaciones.html">
-        <img src="../public/votacion.png" alt="">
-    </a>
-    <h5>Calificaciones</h5>
+  <a href="../html/calificaciones.html">
+      <img src="../public/votacion.png" alt="">
+  </a>
+  <h5>Calificaciones</h5>
 
-    <a href="../html/Reporte.html">
-        <img src="../public/informacion.png" alt="">
-    </a>
-    <h5>Ayuda</h5>
+  <a href="../html/Reporte.html">
+      <img src="../public/informacion.png" alt="">
+  </a>
+  <h5>Ayuda</h5>
 
-    <a href="">
-        <img src="../public/usuario-graduado.png" alt="">
-    </a>
-    <h5>Usuario</h5>
-
-    <a href="">
-        <img src="../public/controles-deslizantes-de-configuracion.png" alt="">
-    </a>
-    <h5>Ajustes</h5>
+  <a href="">
+      <img src="../public/usuario-graduado.png" alt="">
+  </a>
+  <h5>Usuario</h5>
 
 </div>
 
@@ -56,9 +51,9 @@
     <div class="Opotions-table">
 
       <select id="select-C" name="select-C">
-          <option value="opcion1">C-3</option>
-          <option value="opcion2">C-2</option>
-          <option value="opcion3">C-1</option>
+          <option value="opcion1">C-3-2024</option>
+          <option value="opcion2">C-2-2024</option>
+          <option value="opcion3">C-1-2024</option>
       </select>
 
       <button class="pdf-button" onclick="exportTableToPDF()">
@@ -67,7 +62,7 @@
 
     </div>
 
-    <div class="Calificaciones">
+    <div class="Calificaciones" id="Calificaciones">
         <table>
             <table>
                 <thead> <!-- (Opcional) Define la cabecera de la tabla -->
@@ -125,6 +120,9 @@
                 </tbody>
               </table>
         </table>
+
+        <br>
+        <hr>
     </div>   
 </div>
 
@@ -139,25 +137,59 @@
       mainContent.classList.toggle('shifted');
   }
 
-    // Función para exportar la tabla a PDF
-    async function exportTableToPDF() {
-      const { jsPDF } = window.jspdf; // Importar jsPDF
-      const doc = new jsPDF(); // Crear instancia de jsPDF
+  async function exportTableToPDF() {
+      const { jsPDF } = window.jspdf;
 
-      // Obtener la tabla de calificaciones
-      const table = document.getElementById("calificacionesTable");
+      // Crear instancia de jsPDF
+      const doc = new jsPDF();
+      const margin = { top: 20, left: 14, right: 14 };
+      const titleYPosition = margin.top;
 
-      // Agregar el contenido de la tabla al PDF
-      doc.text("Calificaciones", 14, 10); // Título
-      doc.autoTable({ html: table }); // Convertir tabla HTML en tabla PDF
+      // Agregar título
+      doc.text("Calificaciones", margin.left, titleYPosition);
 
-      // Guardar el PDF
+      // Extraer datos de la tabla
+      const table = document.getElementById("Calificaciones");
+      const rows = [];
+      const headers = [];
+      
+      // Extraer encabezados
+      table.querySelectorAll("thead tr th").forEach((header) => {
+        headers.push(header.innerText);
+      });
+
+      // Extraer filas
+      table.querySelectorAll("tbody tr").forEach((row) => {
+        const cells = [];
+        row.querySelectorAll("td").forEach((cell) => {
+          cells.push(cell.innerText);
+        });
+        rows.push(cells);
+      });
+
+      // Usar autoTable para manejar datos multipágina
+      doc.autoTable({
+        head: [headers], // Encabezados
+        body: rows, // Filas de la tabla
+        startY: titleYPosition + 10, // Espaciado tras el título
+        theme: "grid", // Estilo
+        headStyles: { fillColor: [22, 160, 133] }, // Color de encabezados
+        margin: { left: margin.left, right: margin.right }, // Márgenes
+        styles: { fontSize: 10 }, // Tamaño de fuente
+        didDrawPage: (data) => {
+          // Encabezado persistente
+          doc.setFontSize(10);
+          doc.text(
+            "Reporte de Calificaciones - Página " + doc.internal.getNumberOfPages(),
+            margin.left,
+            margin.top - 5
+          );
+        }
+      });
+
+      // Guardar PDF
       doc.save("calificaciones.pdf");
-  }
-  </script>
-
-
-
-    
+    }
+</script>
 </body>
 </html>
