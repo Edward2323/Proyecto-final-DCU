@@ -4,63 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PicaUni</title>
-    <link rel="stylesheet" href="./Styles/Deshboardcss.css">
+    <link rel="stylesheet" href="../Styles/Deshboardcss.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<div class="sidebar">
-    <h2 style="text-align: center;">Menu</h2>
+    <!-- Botón de menú -->
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
 
-    <a href="./index.html">
-        <img src="./public/hogar (3).png" alt="">
-    </a>
-    <h5>hogar</h5>
+    <div class="container">
+        <!-- Barra lateral -->
+        <div class="sidebar" id="sidebar">
+            <h2 style="text-align: center;">Menu</h2>
 
-    <a href="./html/calificaciones.html">
-        <img src="./public/votacion.png" alt="">
-    </a>
-    <h5>Calificaciones</h5>
+            <a href="../html/Index.html">
+                <img src="../public/hogar (3).png" alt="">
+            </a>
+            <h5>hogar</h5>
+        
+            <a href="../html/calificaciones.html">
+                <img src="../public/votacion.png" alt="">
+            </a>
+            <h5>Calificaciones</h5>
+        
+            <a href="../html/Reporte.html">
+                <img src="../public/informacion.png" alt="">
+            </a>
+            <h5>Ayuda</h5>
+        
+            <a href="">
+                <img src="../public/usuario-graduado.png" alt="">
+            </a>
+            <h5>Usuario</h5>
+        </div>
 
-    <a href="./html/Reporte.html">
-        <img src="./public/exclamacion.png" alt="">
-    </a>
-    <h5>Reportes</h5>
+        <!-- Contenido principal -->
+        <div class="main-content" id="mainContent">
+            <div class="header">
+                <h1>Bienvenido al Dashboard</h1>
+            </div>
 
-    <a href="">
-        <img src="./public/usuario-graduado.png" alt="">
-    </a>
-    <h5>Usuario</h5>
+            <div class="cards">
+                <div class="card">
+                    <h3>Asignaciones</h3>
+                    <p>12</p>
+                </div>
+                <div class="card">
+                    <h3>Creditos</h3>
+                    <p>24</p>
+                </div>
+                <div class="card">
+                    <h3>Promedio</h3>
+                    <p>3.38</p>
+                </div>
+            </div>
 
-    <a href="">
-        <img src="./public/controles-deslizantes-de-configuracion.png" alt="">
-    </a>
-    <h5>Ajustes</h5>
-
-</div>
-
-
-<div class="main-content">
-    <div class="header">
-        <h1>Dashboard</h1>
+            <!-- Gráfico -->
+            <div class="chart-container">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
     </div>
 
-    <div class="cards">
-        <div class="card">
-            <h3>Asignaciones</h3>
-            <p>10</p>
-        </div>
-        <div class="card">
-            <h3>Creditos</h3>
-            <p>24</p>
-        </div>
-        <div class="card">
-            <h3>Promedio</h3>
-            <p>3.6</p>
-        </div>
-    </div>
+    <script>
+        // Función para mostrar/ocultar la barra lateral y ajustar el contenido principal
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var mainContent = document.getElementById('mainContent');
+            sidebar.classList.toggle('open');
+            mainContent.classList.toggle('shifted');
+        }
 
-    
-</div>
-    
+        // Datos para el gráfico
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar', // Tipo de gráfico (barra)
+            data: {
+                labels: ['Inteligencia Artificial', 'Ingles nivel 5-7', 'Programacion 2', 'Base de datos', 'Calculo Integral'], // Etiquetas del gráfico
+                datasets: [{
+                    label: 'Promedio (C-3))',
+                    data: [3.5, 3.3, 3.1, 3.8, 3.2], // Datos de las ventas
+                    backgroundColor: '#6cee70', // Color de las barras
+                    borderColor: '#6cee70', // Color de los bordes
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true, // Hace el gráfico responsivo
+                maintainAspectRatio: false, // Mejora la adaptabilidad
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>
