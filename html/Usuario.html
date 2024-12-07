@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PicaUni</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        /* Contenedor principal */
+        .container {
+            display: flex;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        /* Botón de menú */
+        .menu-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            font-size: 24px;
+            background-color: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        /* Barra lateral */
+        .sidebar {
+            height: 2vh;
+            width: 35px;
+            background-color: #333;
+            color: white;
+            padding-top: 20px;
+            position: fixed;
+            top: 25px;
+            left: 28px;
+            display: flex;
+            transition: height 0.6s ease, width 0.6s ease, border-radius 0.6s linear, top 0.6s ease, left 0.6s ease;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 25%;
+        }
+
+        .sidebar.open {
+            height: 100vh;
+            width: 250px;
+            top: 0;
+            left: 0; 
+            border-radius: 0; /* Aparece cuando está abierta */
+        }
+
+
+        .sidebar a, h5 {
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            margin: 0;
+            display: block;
+        }
+
+        .sidebar a{
+            color: white;
+            text-decoration: none;
+            padding-bottom: 5px;
+            text-align: center;
+            margin: 0;
+            display: block;
+        }
+
+        .sidebar h5{
+            padding-bottom: 15px;
+        }
+
+        .sidebar img {
+            width: 30px;
+            height: 30px;
+        }
+
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        /* Contenido principal */
+        .main {
+            margin-top: -10px; /* Altura del encabezado */
+            margin-left: 0px; /* Ancho inicial de la barra lateral */
+            padding: 20px;
+            flex: 1;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar.open ~ .main {
+            margin-left: 250px; /* Ajustar cuando la barra lateral esté abierta */
+        }
+
+        .content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .content h2 {
+            margin-top: 0;
+        }
+
+        label {
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 98%;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .main button:hover {
+            background-color: #45a049;
+        }
+
+        #cambiarUsuario {
+            display: none; /* Ocultar por defecto */
+        }
+    </style>
+</head>
+<body>
+     <!-- Botón de menú -->
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+    <div class="sidebar" id="sidebar">
+        <h2 style="text-align: center;">Menu</h2>
+        
+        <a href="../Index.html">
+            <img src="../public/hogar (3).png" alt="">
+        </a>
+        <h5>hogar</h5>
+        
+        <a href="../html/calificaciones.html">
+            <img src="../public/votacion.png" alt="">
+        </a>
+        <h5>Calificaciones</h5>
+        
+        <a href="../html/Reporte.html">
+            <img src="../public/informacion.png" alt="">
+        </a>
+        <h5>Ayuda</h5>
+        
+        <a href="">
+            <img src="../public/usuario-graduado.png" alt="">
+        </a>
+        <h5>Usuario</h5>
+    
+    </div>
+    
+    <div class="main">
+        <div class="header">
+            <h1>Datos del usuario</h1>
+        </div>
+        <div class="content">
+            <!-- Div para mostrar datos -->
+            <div id="mostrarUsuario">
+                <label for="name">Nombre</label>
+                <p id="nombreTexto">Jorge Rayber</p>
+
+                <label for="email">Correo Electrónico</label>
+                <p id="emailTexto">jrayberacarvajal@gmail.com</p>
+
+                <label for="password">Contraseña</label>
+                <p id="passwordTexto">****************</p>
+                <button class="btn-cambiar" onclick="cambiar()">Cambiar Datos</button>
+            </div>
+            <!-- Div para editar datos -->
+            <div id="cambiarUsuario">
+                <label for="name">Nombre</label>
+                <input type="text" id="name" name="name" value="Jorge Rayber" required>
+
+                <label for="email">Correo Electrónico</label>
+                <input type="email" id="email" name="email" value="jrayberacarvajal@gmail.com" required>
+
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+
+                <button class="btn-cambiar" onclick="guardarDatos()">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        function cambiar() {
+            // Referencias a los divs
+            const mostrarUsuario = document.getElementById('mostrarUsuario');
+            const cambiarUsuario = document.getElementById('cambiarUsuario');
+
+            // Alternar visibilidad
+            mostrarUsuario.style.display = "none";
+            cambiarUsuario.style.display = "block";
+        }
+
+        function guardarDatos() {
+            // Obtener los valores de los inputs
+            const nombreInput = document.getElementById('name').value;
+            const emailInput = document.getElementById('email').value;
+            const passwordInput = document.getElementById('password').value;
+
+            // Actualizar los textos de los <p>
+            document.getElementById('nombreTexto').textContent = nombreInput;
+            document.getElementById('emailTexto').textContent = emailInput;
+            document.getElementById('passwordTexto').textContent = passwordInput.replace(/./g, '*');
+
+            // Volver a mostrar el div con los datos
+            const mostrarUsuario = document.getElementById('mostrarUsuario');
+            const cambiarUsuario = document.getElementById('cambiarUsuario');
+            mostrarUsuario.style.display = "block";
+            cambiarUsuario.style.display = "none";
+        }
+    </script>
+</body>
+</html>
